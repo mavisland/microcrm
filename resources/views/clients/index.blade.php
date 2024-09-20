@@ -29,12 +29,15 @@
                                                     <td class="whitespace-normal px-6 py-4">{{ $client->company_vat }}</td>
                                                     <td class="whitespace-nowrap px-6 py-4">{{ $client->company_address }}</td>
                                                     <td class="whitespace-normal px-6 py-4">
-                                                        <a href="{{ route('clients.edit', $client) }}" class="underline">Edit</a> |
+                                                        <a href="{{ route('clients.edit', $client) }}" class="underline">Edit</a>
+                                                        @can(\App\Enums\PermissionEnum::DELETE_CLIENTS->value)
+                                                        |
                                                         <form class="inline-block" action="{{ route('clients.destroy', $client) }}" method="POST" onsubmit="return confirm('Are you sure?')">
                                                             @method('DELETE')
                                                             @csrf
                                                             <button type="submit" class="text-red-500 underline inline-block">Delete</button>
                                                         </form>
+                                                        @endcan
                                                     </td>
                                             @endforeach
                                         </tbody>

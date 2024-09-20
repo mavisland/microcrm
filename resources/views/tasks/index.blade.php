@@ -34,6 +34,7 @@
                                                 <td class="whitespace-nowrap px-6 py-4">{{ $task->status }}</td>
                                                 <td class="whitespace-normal px-6 py-4">
                                                     <a href="{{ route('tasks.edit', $task) }}" class="underline">Edit</a>
+                                                    @can(\App\Enums\PermissionEnum::DELETE_TASKS->value)
                                                     |
                                                     <form class="inline-block"
                                                           action="{{ route('tasks.destroy', $task) }}"
@@ -44,6 +45,7 @@
                                                                 class="text-red-500 underline inline-block">Delete
                                                         </button>
                                                     </form>
+                                                    @endcan
                                                 </td>
                                         @endforeach
                                         </tbody>

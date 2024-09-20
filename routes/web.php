@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Enums\RoleEnum;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
+use App\Enums\PermissionEnum;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,9 +17,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('users', UserController::class)
-        ->middleware(['role:' . RoleEnum::ADMIN->value]);
-
+    Route::resource('users', UserController::class)->middleware('can:' . PermissionEnum::MANAGE_USERS->value);
     Route::resource('clients', ClientController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('tasks', TaskController::class);
